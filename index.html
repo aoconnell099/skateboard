@@ -1,0 +1,304 @@
+<!doctype html>
+<html>
+<head>
+    <title>Welcome | Andrew O'Connell</title>
+    <meta charset="UTF-8">
+    <!-- this link to the preview online version of BJS -->
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <!-- this is needed for BJS to load scene files -->
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <!-- this is needed for cannon physics engine -->
+    <script src="https://cdn.babylonjs.com/cannon.js"></script>
+    <!-- this is needed for the starfield procedural texture -->
+    <script src="https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+    <!-- Favicon Blue -->
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="./faviconBlue/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./faviconBlue/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./faviconBlue/favicon-16x16.png">
+    <link rel="manifest" href="./faviconBlue/site.webmanifest"> -->
+
+    <!-- Favicon Black -->
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="./faviconBlack/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./faviconBlack/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./faviconBlack/favicon-16x16.png">
+    <link rel="manifest" href="./faviconBlack/site.webmanifest"> -->
+
+    <!-- Favicon Green -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./faviconGreen/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./faviconGreen/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./faviconGreen/favicon-16x16.png">
+    <link rel="manifest" href="./faviconGreen/site.webmanifest">
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+    <!-- CSS Global Compulsory -->
+    <link rel="stylesheet" href="./assets/vendor/bootstrap/bootstrap.min.css">
+    <!-- CSS Global Icons -->
+    <link rel="stylesheet" href="./assets/vendor/icon-line-pro/style.css">
+
+    <!-- CSS Unify -->
+    <link rel="stylesheet" href="./assets/css/unify-core.css">
+    <link rel="stylesheet" href="./assets/css/unify-components.css">
+    <link rel="stylesheet" href="./assets/css/unify-globals.css">
+
+    <!-- CSS Customization -->
+    <link rel="stylesheet" href="./assets/css/custom.css">
+    
+    <style>
+        html, body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: OpenSans, tahoma, arial, sans-serif;
+            color:white;
+        }
+
+        #canvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+
+        #canvas-wrap { 
+            width: 100%;
+            height: 100%;
+            position:relative 
+        } /* Make this a positioned parent */
+        
+        #overlay { 
+            position:absolute; 
+            top:20px; 
+            left:30px; 
+        }
+
+        .row {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        
+        .g-py-10 {
+            padding-top: 0.71429rem !important;
+            padding-bottom: 0.71429rem !important;
+        }
+
+        .g-px-20 {
+            padding-left: 1.42857rem !important;
+            padding-right: 1.42857rem !important;
+        }
+
+        .directions {
+            font-size: 14;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="canvas-wrap">
+        <canvas id="canvas"></canvas>
+        <div id="overlay">
+            <div class="row">
+                
+                    <div class="g-py-10 g-px-20">
+
+                        <p class="directions">
+                                Controls:  
+                            <br>
+                            <br> Click the skateboard to begin
+                            <br> 
+                            <br> Q: Change position, rotation, and scale
+                            <br> W: Change position
+                            <br> E: Change rotation
+                            <br> R: Change scale
+                            <br> Y: Toggle gizmo visibility
+                            <br> D: Toggle gizmo size
+                        </p>
+                          
+                    
+                    </div> 
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        var canvas = document.getElementById("canvas");
+        var engine = new BABYLON.Engine(canvas, true);
+
+        BABYLON.SceneLoader.Load("", "skateboardSmall.babylon", engine, function (scene) { 
+
+            var helper = scene.createDefaultEnvironment({
+                enableGroundMirror: true,
+                groundShadowLevel: 0.6,
+            });       
+            helper.setMainColor(BABYLON.Color3.Gray());
+            helper.ground.isPickable = false;
+            helper.skybox.isPickable = false;
+            // helper.ground.scaling = new BABYLON.Vector3(10,10,10);
+            // helper.skybox.scaling = new BABYLON.Vector3(10,10,10);
+
+            var boardMat = new BABYLON.PBRMaterial("boardMat", scene);
+            boardMat.albedoTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_basecolor.jpg", scene);
+            boardMat.bumpTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_normal.jpg", scene);
+            boardMat.ambientTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_ambient_occlusion.jpg", scene);
+            boardMat.metallicTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_metallic.jpg", scene);
+            boardMat.microSurfaceTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_roughness.jpg", scene);
+            boardMat.albedoTexture.uScale = 20;
+            boardMat.albedoTexture.vScale = 20;
+            boardMat.bumpTexture.uScale = 20;
+            boardMat.bumpTexture.vScale = 20;
+            boardMat.ambientTexture.uScale = 20;
+            boardMat.ambientTexture.vScale = 20;
+            boardMat.roughness = 1;
+            boardMat.metallic = 1;
+            
+            boardMat.useRoughnessFromMetallicTextureAlpha = false;
+            boardMat.useRoughnessFromMetallicTextureGreen = true;
+            boardMat.useMetallnessFromMetallicTextureBlue = true;
+
+            let board = scene.getMeshByName("skateboard");
+            board.material = boardMat;
+            board.position.y = 1.6;
+            board.rotation.x = -Math.PI/2;
+            board.rotation.y = Math.PI;
+
+            
+            //third-person camera
+            var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI/2, Math.PI/2, 5, new BABYLON.Vector3(0,5,0), scene); //y =8
+            //camera.upperBetaLimit = Math.PI/2; // stops camera from going through the ground
+            camera.lowerRadiusLimit = 1;
+            camera.upperRadiusLimit = 20;
+            camera.pinchPrecision = 90;
+            camera.angularSensibilityX = 1000;
+            camera.angularSensibilityY = 1000;
+            camera.minZ = 0.1;
+            
+            console.log(camera.radius);
+            scene.activeCamera = camera;
+            camera.target = new BABYLON.Vector3(0,2,0);
+            scene.activeCamera.attachControl(canvas, true);
+
+            //var light = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(0,2,0), scene);
+
+            // Initialize GizmoManager
+            var gizmoManager = new BABYLON.GizmoManager(scene)
+
+            // Initialize all gizmos
+            gizmoManager.boundingBoxGizmoEnabled=true;
+            gizmoManager.positionGizmoEnabled = true;
+            gizmoManager.rotationGizmoEnabled = true;
+            gizmoManager.scaleGizmoEnabled = true;
+
+            // Modify gizmos based on keypress
+            document.onkeydown = (e)=>{
+                if(e.key == 'w' || e.key == 'e'|| e.key == 'r'|| e.key == 'q'){
+                    // Switch gizmo type
+                    gizmoManager.positionGizmoEnabled = false;
+                    gizmoManager.rotationGizmoEnabled = false;
+                    gizmoManager.scaleGizmoEnabled = false;
+                    gizmoManager.boundingBoxGizmoEnabled = false;
+                    if(e.key == 'w'){
+                        gizmoManager.positionGizmoEnabled = true;
+                    }
+                    if(e.key == 'e'){
+                        gizmoManager.rotationGizmoEnabled = true;
+                    }
+                    if(e.key == 'r'){
+                        gizmoManager.scaleGizmoEnabled = true;
+                    }
+                    if(e.key == 'q'){
+                        gizmoManager.boundingBoxGizmoEnabled = true;
+                    }
+                }
+                if(e.key == 'y'){
+                    // hide the gizmo
+                    gizmoManager.attachToMesh(null);
+                }
+                if(e.key == 'a'){
+                    // Toggle local/global gizmo rotation positioning
+                    gizmoManager.gizmos.positionGizmo.updateGizmoRotationToMatchAttachedMesh = !gizmoManager.gizmos.positionGizmo.updateGizmoRotationToMatchAttachedMesh;
+                    gizmoManager.gizmos.rotationGizmo.updateGizmoRotationToMatchAttachedMesh = !gizmoManager.gizmos.rotationGizmo.updateGizmoRotationToMatchAttachedMesh;
+                }
+                if(e.key == 's'){
+                    // Toggle distance snapping
+                    if(gizmoManager.gizmos.scaleGizmo.snapDistance == 0){
+                        gizmoManager.gizmos.scaleGizmo.snapDistance = 0.3;
+                        gizmoManager.gizmos.rotationGizmo.snapDistance = 0.3;
+                        gizmoManager.gizmos.positionGizmo.snapDistance = 0.3;
+                    }else{
+                        gizmoManager.gizmos.scaleGizmo.snapDistance = 0;
+                        gizmoManager.gizmos.rotationGizmo.snapDistance = 0;
+                        gizmoManager.gizmos.positionGizmo.snapDistance = 0;
+                    }
+                }
+                if(e.key == 'd'){
+                    // Toggle gizmo size
+                    if(gizmoManager.gizmos.scaleGizmo.scaleRatio == 1){
+                        gizmoManager.gizmos.scaleGizmo.scaleRatio = 1.5;
+                        gizmoManager.gizmos.rotationGizmo.scaleRatio = 1.5;
+                        gizmoManager.gizmos.positionGizmo.scaleRatio = 1.5;
+                    }else{
+                        gizmoManager.gizmos.scaleGizmo.scaleRatio = 1;
+                        gizmoManager.gizmos.rotationGizmo.scaleRatio = 1;
+                        gizmoManager.gizmos.positionGizmo.scaleRatio = 1;
+                    }
+                }
+            }
+
+            // Start by only enabling position control
+            document.onkeydown({key: "w"});
+
+
+
+            
+
+            //  // GUI
+            // var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
+
+            // var panel = new BABYLON.GUI.StackPanel();  
+            // panel.width = "80px";
+            // panel.height = "60px";
+            
+            // panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+            // panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+            // advancedTexture.addControl(panel);
+
+            // var playButton = BABYLON.GUI.Button.CreateImageOnlyButton(
+            //     "playBut",
+            //     "./Play.png"
+            // );
+            // playButton.width = "40px";
+            // playButton.height = "40px";
+            // panel.addControl(playButton);
+            // var pauseButton = BABYLON.GUI.Button.CreateImageOnlyButton(
+            //     "pauseBut",
+            //     "./Pause.png"
+            // );
+            // pauseButton.width = "40px";
+            // pauseButton.height = "40px";
+            // pauseButton.isVisible = false;
+            // panel.addControl(pauseButton);
+
+            scene.debugLayer.show({
+                embedMode: true
+            });
+
+
+            engine.runRenderLoop(function() {
+                scene.render();
+            });
+
+            window.addEventListener("resize", function () {
+                engine.resize();
+            });
+        });
+    </script>
+</body>
+</html>
