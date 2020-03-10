@@ -12,16 +12,36 @@ Exporter version: 6.2.4, Blender version: 2.81 (sub 16)
 	Python World class constructor completed
 	WARNING: No active camera has been assigned, or is not in a currently selected Blender layer
 	processing begun of mesh:  skateboard
-		WARNING: No materials have been assigned: 
-		num positions      :  20501
-		num normals        :  20501
+		processing begun of material:  Wood_02
+			WARNING: unsupported node type(NodeReroute) will trigger baking
+			WARNING: unsupported node type(NodeReroute) will trigger baking
+			WARNING: unsupported node type(ShaderNodeMixRGB) will trigger baking
+			WARNING: unsupported node type(NodeReroute) will trigger baking
+			WARNING: unsupported node type(NodeReroute) will trigger baking
+			WARNING: unsupported node type(ShaderNodeRGBCurve) will trigger baking
+			WARNING: unsupported node type(NodeReroute) will trigger baking
+			WARNING: unsupported node group(Group.001) will trigger baking
+			WARNING: Roughness channel baking required, but not possible, ignored
+			processing texture Wood02_normal
+				texture type:  bumpTexture, mapped using: "UVMap"
+			processing texture Wood02_ambient_occlusion
+				texture type:  diffuseTexture, mapped using: "UVMap"
+			processing texture Wood02_roughness
+				texture type:  value not meaningful 2, mapped using: "UVMap"
+			Baking texture, type: DIFFUSE, mapped using: UVMap
+			processing texture Wood_02_DIFFUSE
+				texture type:  diffuseTexture, mapped using: "UVMap"
+			bake time:  0 min, 10.3014 secs
+		num positions      :  20498
+		num normals        :  20498
 		num tangents       :  0
-		num uvs            :  0
+		num uvs            :  40996
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  21594
+	processing begun of light (POINT):  Light
 ========= Writing of JSON file started =========
 	writing mesh:  skateboard
 ========= Writing of JSON file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 0.8693 secs
+elapsed time:  0 min, 11.2562 secs

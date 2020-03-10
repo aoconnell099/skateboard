@@ -134,7 +134,7 @@
         var canvas = document.getElementById("canvas");
         var engine = new BABYLON.Engine(canvas, true);
 
-        BABYLON.SceneLoader.Load("", "skateboardSmall.babylon", engine, function (scene) { 
+        BABYLON.SceneLoader.Load("", "skateboard.babylon", engine, function (scene) { 
 
             var helper = scene.createDefaultEnvironment({
                 enableGroundMirror: true,
@@ -146,28 +146,29 @@
             // helper.ground.scaling = new BABYLON.Vector3(10,10,10);
             // helper.skybox.scaling = new BABYLON.Vector3(10,10,10);
 
-            var boardMat = new BABYLON.PBRMaterial("boardMat", scene);
-            boardMat.albedoTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_basecolor.jpg", scene);
-            boardMat.bumpTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_normal.jpg", scene);
-            boardMat.ambientTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_ambient_occlusion.jpg", scene);
-            boardMat.metallicTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_metallic.jpg", scene);
-            boardMat.microSurfaceTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_roughness.jpg", scene);
-            boardMat.albedoTexture.uScale = 20;
-            boardMat.albedoTexture.vScale = 20;
-            boardMat.bumpTexture.uScale = 20;
-            boardMat.bumpTexture.vScale = 20;
-            boardMat.ambientTexture.uScale = 20;
-            boardMat.ambientTexture.vScale = 20;
-            boardMat.roughness = 1;
-            boardMat.metallic = 1;
+            // var boardMat = new BABYLON.PBRMaterial("boardMat", scene);
+            // boardMat.albedoTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_basecolor.jpg", scene);
+            // boardMat.bumpTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_normal.jpg", scene);
+            // boardMat.ambientTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_ambient_occlusion.jpg", scene);
+            // boardMat.metallicTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_metallic.jpg", scene);
+            // boardMat.microSurfaceTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_roughness.jpg", scene);
+            // boardMat.albedoTexture.uScale = 20;
+            // boardMat.albedoTexture.vScale = 20;
+            // boardMat.bumpTexture.uScale = 20;
+            // boardMat.bumpTexture.vScale = 20;
+            // boardMat.ambientTexture.uScale = 20;
+            // boardMat.ambientTexture.vScale = 20;
+            // boardMat.roughness = 1;
+            // boardMat.metallic = 1;
             
-            boardMat.useRoughnessFromMetallicTextureAlpha = false;
-            boardMat.useRoughnessFromMetallicTextureGreen = true;
-            boardMat.useMetallnessFromMetallicTextureBlue = true;
+            // boardMat.useRoughnessFromMetallicTextureAlpha = false;
+            // boardMat.useRoughnessFromMetallicTextureGreen = true;
+            // boardMat.useMetallnessFromMetallicTextureBlue = true;
 
             let board = scene.getMeshByName("skateboard");
-            board.material = boardMat;
-            board.position.y = 1.6;
+            // board.material = boardMat;
+            //board.scaling = new BABYLON.Vector3(0.01,0.01,0.01);
+            board.position.y = 1.8;
             board.rotation.x = -Math.PI/2;
             board.rotation.y = Math.PI;
 
