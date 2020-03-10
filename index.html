@@ -3,6 +3,9 @@
 <head>
     <title>Welcome | Andrew O'Connell</title>
     <meta charset="UTF-8">
+
+    <meta property="og:title" content="Skateboard Editor" />
+    <meta property="og:image" content="./screenshot.JPG" />
     <!-- this link to the preview online version of BJS -->
     <script src="https://preview.babylonjs.com/babylon.js"></script>
     <!-- this is needed for BJS to load scene files -->
@@ -26,25 +29,16 @@
     <link rel="manifest" href="./faviconBlack/site.webmanifest"> -->
 
     <!-- Favicon Green -->
-    <link rel="apple-touch-icon" sizes="180x180" href="./faviconGreen/apple-touch-icon.png">
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="./faviconGreen/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./faviconGreen/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./faviconGreen/favicon-16x16.png">
-    <link rel="manifest" href="./faviconGreen/site.webmanifest">
+    <link rel="manifest" href="./faviconGreen/site.webmanifest"> -->
 
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
-    <!-- CSS Global Compulsory -->
-    <link rel="stylesheet" href="./assets/vendor/bootstrap/bootstrap.min.css">
-    <!-- CSS Global Icons -->
-    <link rel="stylesheet" href="./assets/vendor/icon-line-pro/style.css">
-
-    <!-- CSS Unify -->
-    <link rel="stylesheet" href="./assets/css/unify-core.css">
-    <link rel="stylesheet" href="./assets/css/unify-components.css">
-    <link rel="stylesheet" href="./assets/css/unify-globals.css">
 
     <!-- CSS Customization -->
-    <link rel="stylesheet" href="./assets/css/custom.css">
+    <!-- <link rel="stylesheet" href="./assets/css/custom.css"> -->
     
     <style>
         html, body {
@@ -136,6 +130,9 @@
 
         BABYLON.SceneLoader.Load("", "skateboard.babylon", engine, function (scene) { 
 
+            scene.getLightByName("Light").dispose();
+            //scene.getLightByName("Light").position = new BABYLON.Vector3(1,2,2);
+
             var helper = scene.createDefaultEnvironment({
                 enableGroundMirror: true,
                 groundShadowLevel: 0.6,
@@ -183,7 +180,6 @@
             camera.angularSensibilityY = 1000;
             camera.minZ = 0.1;
             
-            console.log(camera.radius);
             scene.activeCamera = camera;
             camera.target = new BABYLON.Vector3(0,2,0);
             scene.activeCamera.attachControl(canvas, true);
