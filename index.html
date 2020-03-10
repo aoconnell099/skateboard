@@ -187,7 +187,7 @@
             camera.target = new BABYLON.Vector3(0,2,0);
             scene.activeCamera.attachControl(canvas, true);
 
-            //var light = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(0,2,0), scene);
+            var light = new BABYLON.HemisphericLight("hemiLight", new BABYLON.Vector3(0,2,0), scene);
 
             // Initialize GizmoManager
             var gizmoManager = new BABYLON.GizmoManager(scene)
@@ -288,9 +288,9 @@
             // pauseButton.isVisible = false;
             // panel.addControl(pauseButton);
 
-            // scene.debugLayer.show({
-            //     embedMode: true
-            // });
+            scene.debugLayer.show({
+                embedMode: true
+            });
 
 
             engine.runRenderLoop(function() {
