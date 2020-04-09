@@ -103,6 +103,7 @@
 <body>
     <div id="canvas-wrap">
         <canvas id="canvas"></canvas>
+        <!--
         <div id="overlay">
             <div class="row">
                 
@@ -128,25 +129,36 @@
             </div>
         </div>
     </div>
-    
+    -->
     <script type="text/javascript">
         var canvas = document.getElementById("canvas");
         var engine = new BABYLON.Engine(canvas, true);
 
-        BABYLON.SceneLoader.Load("", "skateboard.babylon", engine, function (scene) { 
+        BABYLON.SceneLoader.Load("", "skateboardFinalCut.babylon", engine, function (scene) { 
 
             scene.getLightByName("Light").dispose();
             //scene.getLightByName("Light").position = new BABYLON.Vector3(1,2,2);
 
-            var helper = scene.createDefaultEnvironment({
-                enableGroundMirror: true,
-                groundShadowLevel: 0.6,
-            });       
-            helper.setMainColor(BABYLON.Color3.Gray());
-            helper.ground.isPickable = false;
-            helper.skybox.isPickable = false;
+            // var helper = scene.createDefaultEnvironment({
+            //     enableGroundMirror: true,
+            //     groundShadowLevel: 0.6,
+            // });       
+            // helper.setMainColor(new BABYLON.Color3.White());
+            // helper.ground.isPickable = false;
+            // helper.skybox.isPickable = false;
+
             // helper.ground.scaling = new BABYLON.Vector3(10,10,10);
             // helper.skybox.scaling = new BABYLON.Vector3(10,10,10);
+
+            // Skybox
+            var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:1000.0}, scene);
+            var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+            skyboxMaterial.backFaceCulling = false;
+            skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("./white", scene);
+            skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+            skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            skybox.material = skyboxMaterial;	
 
             // var boardMat = new BABYLON.PBRMaterial("boardMat", scene);
             // boardMat.albedoTexture = new BABYLON.Texture("./Materials_Wood_01/jpeg/Wood 02/Wood02_basecolor.jpg", scene);
@@ -167,13 +179,98 @@
             // boardMat.useRoughnessFromMetallicTextureGreen = true;
             // boardMat.useMetallnessFromMetallicTextureBlue = true;
 
-            let board = scene.getMeshByName("skateboard");
+            //let board = scene.getMeshByName("skateboard");
+            let boardPieces = [];
+            let leftSide = [];
+            let rightSide = [];
+            let topSide = [];
+            let bottomSide = [];
+            let bottomLeft = scene.getMeshByName("bottom_left");
+            boardPieces.push(bottomLeft);
+            leftSide.push(bottomLeft);
+            bottomSide.push(bottomLeft);
+
+            let bottomCenter = scene.getMeshByName("bottom_center");
+            boardPieces.push(bottomCenter);
+            bottomSide.push(bottomCenter);
+
+            let bottomRight = scene.getMeshByName("bottom_right");
+            boardPieces.push(bottomRight);
+            rightSide.push(bottomRight);
+            bottomSide.push(bottomRight);
+
+            let centerLeft = scene.getMeshByName("center_left");
+            boardPieces.push(centerLeft);
+            leftSide.push(centerLeft);
+
+            let center = scene.getMeshByName("center");
+            boardPieces.push(center);
+
+            let centerRight = scene.getMeshByName("center_right");
+            boardPieces.push(centerRight);
+            rightSide.push(centerRight);
+
+            let topLeft = scene.getMeshByName("top_left");
+            boardPieces.push(topLeft);
+            leftSide.push(topLeft);
+            topSide.push(topLeft);
+
+            let topCenter = scene.getMeshByName("top_center");
+            boardPieces.push(topCenter);
+            topSide.push(topCenter);
+
+            let topRight = scene.getMeshByName("top_right");
+            boardPieces.push(topRight);
+            rightSide.push(topRight);
+            topSide.push(topRight);
+
+            let wheelbaseBotLeft = scene.getMeshByName("wb_b_left");
+            boardPieces.push(wheelbaseBotLeft);
+            leftSide.push(wheelbaseBotLeft);
+            //bottomSide.push(wheelbaseBotLeft);
+
+            let wheelbaseBotRight = scene.getMeshByName("wb_b_right");
+            boardPieces.push(wheelbaseBotRight);
+            rightSide.push(wheelbaseBotRight);
+            //bottomSide.push(wheelbaseBotRight);
+
+            let wheelbaseTopLeft = scene.getMeshByName("wb_t_left");
+            boardPieces.push(wheelbaseTopLeft);
+            leftSide.push(wheelbaseTopLeft);
+            //topSide.push(wheelbaseTopLeft);
+
+            let wheelbaseTopRight = scene.getMeshByName("wb_t_right");
+            boardPieces.push(wheelbaseTopRight);
+            rightSide.push(wheelbaseTopRight);
+            //topSide.push(wheelbaseTopRight);
+
+            let wheelbaseTop = scene.getMeshByName("wheelbase_top");
+            boardPieces.push(wheelbaseTop);
+            //topSide.push(wheelbaseTop);
+
+            let wheelbaseBot = scene.getMeshByName("wheelbase_bot");
+            boardPieces.push(wheelbaseBot);
+            //bottomSide.push(wheelbaseBot);
             // board.material = boardMat;
             //board.scaling = new BABYLON.Vector3(0.01,0.01,0.01);
-            board.position.y = 1.8;
-            board.rotation.x = -Math.PI/2;
-            board.rotation.y = Math.PI;
 
+            
+            // board.position.y = 1.8;
+            // board.rotation.x = -Math.PI/2;
+            // board.rotation.y = Math.PI;
+
+            // wheelbase.position.y = 1.8;
+            // wheelbase.rotation.x = -Math.PI/2;
+            // wheelbase.rotation.y = Math.PI;
+
+            // console.log(board);
+
+            boardPieces.forEach((mesh) => {
+                mesh.position.y = 2;
+                mesh.rotation.x = -Math.PI/2;
+                mesh.rotation.y = Math.PI;
+                //boardPieces.layerMask = bgCamera.layerMask;
+            });
             
             //third-person camera
             var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI/2, Math.PI/2, 5, new BABYLON.Vector3(0,5,0), scene); //y =8
@@ -189,75 +286,238 @@
             camera.target = new BABYLON.Vector3(0,2,0);
             scene.activeCamera.attachControl(canvas, true);
 
-            var light = new BABYLON.HemisphericLight("hemiLight", new BABYLON.Vector3(0,2,0), scene);
+            let light = new BABYLON.HemisphericLight("hemiLight", new BABYLON.Vector3(0,2,0), scene);
 
             // Initialize GizmoManager
-            var gizmoManager = new BABYLON.GizmoManager(scene)
+            // var gizmoManager = new BABYLON.GizmoManager(scene)
 
-            // Initialize all gizmos
-            gizmoManager.boundingBoxGizmoEnabled=true;
-            gizmoManager.positionGizmoEnabled = true;
-            gizmoManager.rotationGizmoEnabled = true;
-            gizmoManager.scaleGizmoEnabled = true;
+            // // Initialize all gizmos
+            // gizmoManager.boundingBoxGizmoEnabled=true;
+            // gizmoManager.positionGizmoEnabled = true;
+            // gizmoManager.rotationGizmoEnabled = true;
+            // gizmoManager.scaleGizmoEnabled = true;
 
-            // Modify gizmos based on keypress
-            document.onkeydown = (e)=>{
-                if(e.key == 'w' || e.key == 'e'|| e.key == 'r'|| e.key == 'q'){
-                    // Switch gizmo type
-                    gizmoManager.positionGizmoEnabled = false;
-                    gizmoManager.rotationGizmoEnabled = false;
-                    gizmoManager.scaleGizmoEnabled = false;
-                    gizmoManager.boundingBoxGizmoEnabled = false;
-                    if(e.key == 'w'){
-                        gizmoManager.positionGizmoEnabled = true;
-                    }
-                    if(e.key == 'e'){
-                        gizmoManager.rotationGizmoEnabled = true;
-                    }
-                    if(e.key == 'r'){
-                        gizmoManager.scaleGizmoEnabled = true;
-                    }
-                    if(e.key == 'q'){
-                        gizmoManager.boundingBoxGizmoEnabled = true;
-                    }
+            // // Modify gizmos based on keypress
+            // document.onkeydown = (e)=>{
+            //     if(e.key == 'w' || e.key == 'e'|| e.key == 'r'|| e.key == 'q'){
+            //         // Switch gizmo type
+            //         gizmoManager.positionGizmoEnabled = false;
+            //         gizmoManager.rotationGizmoEnabled = false;
+            //         gizmoManager.scaleGizmoEnabled = false;
+            //         gizmoManager.boundingBoxGizmoEnabled = false;
+            //         if(e.key == 'w'){
+            //             gizmoManager.positionGizmoEnabled = true;
+            //         }
+            //         if(e.key == 'e'){
+            //             gizmoManager.rotationGizmoEnabled = true;
+            //         }
+            //         if(e.key == 'r'){
+            //             gizmoManager.scaleGizmoEnabled = true;
+            //         }
+            //         if(e.key == 'q'){
+            //             gizmoManager.boundingBoxGizmoEnabled = true;
+            //         }
+            //     }
+            //     if(e.key == 'y'){
+            //         // hide the gizmo
+            //         gizmoManager.attachToMesh(null);
+            //     }
+            //     if(e.key == 'a'){
+            //         // Toggle local/global gizmo rotation positioning
+            //         gizmoManager.gizmos.positionGizmo.updateGizmoRotationToMatchAttachedMesh = !gizmoManager.gizmos.positionGizmo.updateGizmoRotationToMatchAttachedMesh;
+            //         gizmoManager.gizmos.rotationGizmo.updateGizmoRotationToMatchAttachedMesh = !gizmoManager.gizmos.rotationGizmo.updateGizmoRotationToMatchAttachedMesh;
+            //     }
+            //     if(e.key == 's'){
+            //         // Toggle distance snapping
+            //         if(gizmoManager.gizmos.scaleGizmo.snapDistance == 0){
+            //             gizmoManager.gizmos.scaleGizmo.snapDistance = 0.3;
+            //             gizmoManager.gizmos.rotationGizmo.snapDistance = 0.3;
+            //             gizmoManager.gizmos.positionGizmo.snapDistance = 0.3;
+            //         }else{
+            //             gizmoManager.gizmos.scaleGizmo.snapDistance = 0;
+            //             gizmoManager.gizmos.rotationGizmo.snapDistance = 0;
+            //             gizmoManager.gizmos.positionGizmo.snapDistance = 0;
+            //         }
+            //     }
+            //     if(e.key == 'd'){
+            //         // Toggle gizmo size
+            //         if(gizmoManager.gizmos.scaleGizmo.scaleRatio == 1){
+            //             gizmoManager.gizmos.scaleGizmo.scaleRatio = 1.5;
+            //             gizmoManager.gizmos.rotationGizmo.scaleRatio = 1.5;
+            //             gizmoManager.gizmos.positionGizmo.scaleRatio = 1.5;
+            //         }else{
+            //             gizmoManager.gizmos.scaleGizmo.scaleRatio = 1;
+            //             gizmoManager.gizmos.rotationGizmo.scaleRatio = 1;
+            //             gizmoManager.gizmos.positionGizmo.scaleRatio = 1;
+            //         }
+            //     }
+            // }
+            
+
+            var bgCamera = new BABYLON.ArcRotateCamera("BGCamera", Math.PI / 2 + Math.PI / 7, Math.PI / 2, 100,
+                new BABYLON.Vector3(0, 20, 0),
+                scene);
+                console.log("1\n");
+            bgCamera.layerMask = 0x10000000;
+            var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI", true, scene);
+            advancedTexture.layer.layerMask = 0x10000000;
+            var UiPanel = new BABYLON.GUI.StackPanel();
+            console.log("2\n");
+            UiPanel.width = "220px";
+            UiPanel.fontSize = "14px";
+            UiPanel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+            UiPanel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+            
+            advancedTexture.addControl(UiPanel);
+
+            // gizmoManager.keepDepthUtilityLayer.setRenderCamera(camera);
+            // gizmoManager.utilityLayer.setRenderCamera(camera);
+            
+         // gizmoManager.layerMask = bgCamera.layerMask;
+            // boardPieces.forEach((mesh) => {
+            //     mesh.position.y = 2;
+            //     mesh.rotation.x = -Math.PI/2;
+            //     mesh.rotation.y = Math.PI;
+            //     //boardPieces.layerMask = bgCamera.layerMask;
+            // });
+
+            var params = [
+                {name: "width", min:7.5,max:10},
+                {name: "height", min:28.5,max:35}
+            ];
+            let width = 8.5;
+            let height = 31.75;
+
+            
+            params.forEach(function(param){
+                switch (param.name) {
+                    case  "width":
+                        var header = new BABYLON.GUI.TextBlock();
+                        header.text = param.name+":"+width.toFixed(2);
+                        header.height = "40px";
+                        header.color = "black";
+                        header.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+                        header.paddingTop = "10px";
+                        UiPanel.addControl(header); 
+                        
+                        var slider = new BABYLON.GUI.Slider();
+                        slider.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+                        slider.minimum = param.min;
+                        slider.maximum = param.max;
+                        slider.color = "#636e72";
+                        slider.value = width;
+                        slider.height = "20px";
+                        slider.width = "205px";
+                        UiPanel.addControl(slider); 
+                        slider.onValueChangedObservable.add(function(v){
+                            // y=mx+b with x being the slider value and y being the scaling of the board. Start and finish points are determined for each param (scaling and slider representation) and the slope and intersect are determined from that
+                            //board.scaling.x = 0.04 * v - 0.25;
+                            
+                            leftSide.forEach((mesh) => {
+                                console.log(mesh.position.x);
+                                mesh.scaling.x = 0.04 * v - 0.25;
+                                mesh.position.x = (-8.5 + v) * -(v*0.0048); 
+                            });
+
+                            rightSide.forEach((mesh) => {
+                                mesh.scaling.x = 0.04 * v - 0.25;
+                                mesh.position.x = (-8.5 + v) * (v*0.0048); 
+                            });
+
+                            // if (v<7.75) {
+                            //     topCenter.scaling.x = 0.091;
+                            //     topCenter.scaling.z = 0.0993;
+                            // }
+                            // else if (v<8) {
+                            //     topCenter.scaling.x = 0.095;
+                            //     topCenter.scaling.z = 0.0995;
+                            // }   
+                            // else {
+                            //     topCenter.scaling.x = 0.1;
+                            //     topCenter.scaling.z = 0.0999;
+                            // }
+                            //topCenter.scaling.z = 0.04 * v - 0.25;
+                            //topCenter.scaling.z = (0.015*v) - 0.37625;
+                            //topCenter.position.y = 2 - (-8.5 + v) * -(v*0.005); 
+                            // bottomCenter.scaling.z = 0.005 * v - 0.25;
+                            // bottomCenter.position.y =(-8.5 + v) * -(v*0.005); 
+                            header.text = param.name+":"+v.toFixed(2);
+                        });
+
+                        break;
+
+                    case  "height":
+                        var header = new BABYLON.GUI.TextBlock();
+                        header.text = param.name+":"+height.toFixed(2);
+                        header.height = "40px";
+                        header.color = "black";
+                        header.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+                        header.paddingTop = "10px";
+                        UiPanel.addControl(header); 
+                        
+                        var slider = new BABYLON.GUI.Slider();
+                        slider.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+                        slider.minimum = param.min;
+                        slider.maximum = param.max;
+                        slider.color = "#636e72";
+                        slider.value = height;
+                        slider.height = "20px";
+                        slider.width = "205px";
+                        UiPanel.addControl(slider); 
+                        slider.onValueChangedObservable.add(function(v){
+                            // y=mx+b with x being the slider value and y being the scaling of the board. Start and finish points are determined for each param (scaling and slider representation) and the slope and intersect are determined from that
+                            //board.scaling.y = 0.04 * v - 0.25;
+                            topSide.forEach((mesh) => {
+                                console.log(mesh.position.z);
+                                mesh.scaling.z = (0.015*v) - 0.37625;
+                                //mesh.position.z = v*-0.1;
+                                mesh.position.y = 2 + (-31.75 + v) * -(v*0.005); 
+                            });
+
+                            bottomSide.forEach((mesh) => {
+                                mesh.scaling.z = (0.015*v) - 0.37625;
+                                mesh.position.y = 2 - (-31.75 + v) * -(v*0.005); 
+                            });
+                            header.text = param.name+":"+v.toFixed(2);
+                        });
+
+                        break;
+
                 }
-                if(e.key == 'y'){
-                    // hide the gizmo
-                    gizmoManager.attachToMesh(null);
-                }
-                if(e.key == 'a'){
-                    // Toggle local/global gizmo rotation positioning
-                    gizmoManager.gizmos.positionGizmo.updateGizmoRotationToMatchAttachedMesh = !gizmoManager.gizmos.positionGizmo.updateGizmoRotationToMatchAttachedMesh;
-                    gizmoManager.gizmos.rotationGizmo.updateGizmoRotationToMatchAttachedMesh = !gizmoManager.gizmos.rotationGizmo.updateGizmoRotationToMatchAttachedMesh;
-                }
-                if(e.key == 's'){
-                    // Toggle distance snapping
-                    if(gizmoManager.gizmos.scaleGizmo.snapDistance == 0){
-                        gizmoManager.gizmos.scaleGizmo.snapDistance = 0.3;
-                        gizmoManager.gizmos.rotationGizmo.snapDistance = 0.3;
-                        gizmoManager.gizmos.positionGizmo.snapDistance = 0.3;
-                    }else{
-                        gizmoManager.gizmos.scaleGizmo.snapDistance = 0;
-                        gizmoManager.gizmos.rotationGizmo.snapDistance = 0;
-                        gizmoManager.gizmos.positionGizmo.snapDistance = 0;
-                    }
-                }
-                if(e.key == 'd'){
-                    // Toggle gizmo size
-                    if(gizmoManager.gizmos.scaleGizmo.scaleRatio == 1){
-                        gizmoManager.gizmos.scaleGizmo.scaleRatio = 1.5;
-                        gizmoManager.gizmos.rotationGizmo.scaleRatio = 1.5;
-                        gizmoManager.gizmos.positionGizmo.scaleRatio = 1.5;
-                    }else{
-                        gizmoManager.gizmos.scaleGizmo.scaleRatio = 1;
-                        gizmoManager.gizmos.rotationGizmo.scaleRatio = 1;
-                        gizmoManager.gizmos.positionGizmo.scaleRatio = 1;
-                    }
-                }
-            }
+                
+
+                
+
+
+                
+                // var header = new BABYLON.GUI.TextBlock();
+                // header.text = param.name+":"+pipeline.depthOfField[param.name].toFixed(2);
+                // header.height = "40px";
+                // header.color = "black";
+                // header.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+                // header.paddingTop = "10px";
+                // UiPanel.addControl(header); 
+                
+                // var slider = new BABYLON.GUI.Slider();
+                // slider.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+                // slider.minimum = param.min;
+                // slider.maximum = param.max;
+                // slider.color = "#636e72";
+                // slider.value = pipeline.depthOfField[param.name];
+                // slider.height = "20px";
+                // slider.width = "205px";
+                // UiPanel.addControl(slider); 
+                // slider.onValueChangedObservable.add(function(v){
+                //     pipeline.depthOfField[param.name] = v;
+                //     header.text = param.name+":"+pipeline.depthOfField[param.name].toFixed(2);
+                //     moveFocusDistance = false;
+                // });
+            });
+            
+            scene.activeCameras = [scene.activeCamera, bgCamera];
 
             // Start by only enabling position control
-            document.onkeydown({key: "q"});
+            //document.onkeydown({key: "q"});
 
 
 
@@ -293,7 +553,6 @@
             // scene.debugLayer.show({
             //     embedMode: true
             // });
-
 
             engine.runRenderLoop(function() {
                 scene.render();

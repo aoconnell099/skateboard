@@ -1,0 +1,157 @@
+Exporter version: 6.2.4, Blender version: 2.81 (sub 16)
+========= Conversion from Blender to Babylon.js =========
+	Scene settings used :
+		inline textures     :  false
+		Material Type       :  PBR
+		Positions Precision :  4
+		Normals Precision   :  3
+		UVs Precision       :  3
+		Vert Color Precision:  3
+		Mat Weight Precision:  2
+		texture directory   :  C:\xampp\htdocs\babylonScenes\skateboard\
+	Python World class constructor completed
+	WARNING: No active camera has been assigned, or is not in a currently selected Blender layer
+	processing begun of mesh:  wheelbase_top
+		processing begun of material:  Material
+			processing texture Wood023_2K_Color
+				WARNING: Exception during copy:
+					'C:\\Users\\aocon\\babylon3dObj\\..\\..\\..\\xampp\\htdocs\\babylonScenes\\skateboard\\Wood023_2K_Color.jpg' and 'C:\\xampp\\htdocs\\babylonScenes\\skateboard\\Wood023_2K_Color.jpg' are the same file
+				texture type:  diffuseTexture, mapped using: "UVMap"
+			processing texture Wood023_2K_Roughness
+				WARNING: Exception during copy:
+					'C:\\Users\\aocon\\babylon3dObj\\..\\..\\..\\xampp\\htdocs\\babylonScenes\\skateboard\\Wood023_2K_Roughness.jpg' and 'C:\\xampp\\htdocs\\babylonScenes\\skateboard\\Wood023_2K_Roughness.jpg' are the same file
+				texture type:  value not meaningful 2, mapped using: "UVMap"
+		num positions      :  1755
+		num normals        :  1755
+		num tangents       :  0
+		num uvs            :  3510
+		num uvs2           :  0
+		num colors         :  7020
+		num indices        :  1947
+	processing begun of mesh:  bottom_left
+		processing begun of material:  Material
+		registered as also a user of material:  Material
+		num positions      :  2149
+		num normals        :  2149
+		num tangents       :  0
+		num uvs            :  4298
+		num uvs2           :  0
+		num colors         :  8596
+		num indices        :  2166
+	processing begun of mesh:  center_right
+		processing begun of material:  Material
+		registered as also a user of material:  Material
+		num positions      :  1164
+		num normals        :  1164
+		num tangents       :  0
+		num uvs            :  2328
+		num uvs2           :  0
+		num colors         :  4656
+		num indices        :  1305
+	processing begun of mesh:  center_left
+		processing begun of material:  Material
+		registered as also a user of material:  Material
+		num positions      :  2548
+		num normals        :  2548
+		num tangents       :  0
+		num uvs            :  5096
+		num uvs2           :  0
+		num colors         :  10192
+		num indices        :  2940
+	processing begun of mesh:  wb_t_right
+		processing begun of material:  Material
+		registered as also a user of material:  Material
+		num positions      :  867
+		num normals        :  867
+		num tangents       :  0
+		num uvs            :  1734
+		num uvs2           :  0
+		num colors         :  3468
+		num indices        :  873
+	processing begun of mesh:  wb_b_right
+		processing begun of material:  Material
+		registered as also a user of material:  Material
+		num positions      :  805
+		num normals        :  805
+		num tangents       :  0
+		num uvs            :  1610
+		num uvs2           :  0
+		num colors         :  3220
+		num indices        :  813
+	processing begun of mesh:  wb_b_left
+		processing begun of material:  Material
+		registered as also a user of material:  Material
+		num positions      :  863
+		num normals        :  863
+		num tangents       :  0
+		num uvs            :  1726
+		num uvs2           :  0
+		num colors         :  3452
+		num indices        :  873
+	processing begun of mesh:  wb_t_left
+		processing begun of material:  Material
+		registered as also a user of material:  Material
+		num positions      :  1346
+		num normals        :  1346
+		num tangents       :  0
+		num uvs            :  2692
+		num uvs2           :  0
+		num colors         :  5384
+		num indices        :  1359
+	processing begun of mesh:  bottom_right
+		processing begun of material:  Material
+		registered as also a user of material:  Material
+		num positions      :  2138
+		num normals        :  2138
+		num tangents       :  0
+		num uvs            :  4276
+		num uvs2           :  0
+		num colors         :  8552
+		num indices        :  2154
+	processing begun of mesh:  top_left
+		processing begun of material:  Material
+		registered as also a user of material:  Material
+		num positions      :  3342
+		num normals        :  3342
+		num tangents       :  0
+		num uvs            :  6684
+		num uvs2           :  0
+		num colors         :  13368
+		num indices        :  3576
+	processing begun of mesh:  top_right
+		processing begun of material:  Material
+		registered as also a user of material:  Material
+		num positions      :  2346
+		num normals        :  2346
+		num tangents       :  0
+		num uvs            :  4692
+		num uvs2           :  0
+		num colors         :  9384
+		num indices        :  2367
+	processing begun of mesh:  wheelbase_bot
+		processing begun of material:  Material
+		registered as also a user of material:  Material
+		num positions      :  1164
+		num normals        :  1164
+		num tangents       :  0
+		num uvs            :  2328
+		num uvs2           :  0
+		num colors         :  4656
+		num indices        :  1233
+	processing begun of light (POINT):  Light
+========= Writing of JSON file started =========
+	writing mesh:  wheelbase_top
+	writing mesh:  bottom_left
+	writing mesh:  center_right
+	writing mesh:  center_left
+	writing mesh:  wb_t_right
+	writing mesh:  wb_b_right
+	writing mesh:  wb_b_left
+	writing mesh:  wb_t_left
+	writing mesh:  bottom_right
+	writing mesh:  top_left
+	writing mesh:  top_right
+	writing mesh:  wheelbase_bot
+========= Writing of JSON file completed =========
+========= end of processing =========
+elapsed time:  0 min, 1.7754 secs
